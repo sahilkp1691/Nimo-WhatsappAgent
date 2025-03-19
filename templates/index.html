@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Sender</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJv3X6VmY5M8a9C1bsXow9v1fM/b08dFcC55E5QsKX5JK8c8iNz03gn76Xoo" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .contact-card {
+            background-color: #ffffff;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .contact-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .contact-card h5 {
+            font-size: 18px;
+            color: #333;
+        }
+        .contact-card p {
+            font-size: 14px;
+            color: #666;
+        }
+        .card-container {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: fixed;
+            width: 100%;
+            padding: 10px;
+            background: #f4f7fc;
+        }
+        .contact-card button {
+            background-color: #2bc97d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .contact-card button:hover {
+            background-color: #2ab162;
+        }
+        .status-modal {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #11bd67;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+    
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-light bg-white px-4 shadow-sm">
+        <a class="navbar-brand d-flex align-items-center" href="http://localhost:8080" style="font-size: 24px; color: #34484c;">
+            <img src="./static/imgs/icon.png" width="40" height="40" class="d-inline-block align-top me-2" alt="">
+            NIMO
+        </a>
+    
+        <div class="ms-auto d-flex gap-3">
+            <a href="http://localhost:8080" class="nav-link text-dark fw-normal" style="font-size: 16px; transition: color 0.3s ease;">Home</a>
+            <a href="https://github.com/sahilkp1691" class="nav-link text-dark fw-normal" style="font-size: 16px; transition: color 0.3s ease;">Contact</a>
+            <a href="/readme" class="nav-link text-dark">README.md</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Start Nimo!</h1>
+        </div>
+    </div>
+
+    <div class="status-modal" id="statusMessage">
+        Message Sent!
+    </div>
+
+    <div class="card-container">
+        {% for contact in contacts %}
+            <div class="contact-card">
+                <h5>{{ contact.name }}</h5>
+                <br>    
+                <p>{{ contact.phone }}</p>
+                <form method="POST" action="/" target="hiddenIframe">
+                    <input type="hidden" name="contact" value="{{ contact.phone }}">
+                    <button type="submit" onclick="showStatusMessage()">Send Message</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    <iframe name="hiddenIframe" style="display:none;"></iframe>
+
+    <script>
+        function showStatusMessage() {
+            const status = document.getElementById('statusMessage');
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        
+        // Redirect to chat-history
+        // setTimeout(() => {
+        //     window.location.href = '/chat-history'; // Redirect after 3 seconds
+        // }, 3000);
+        }
+    </script>
+</body>
+</html>

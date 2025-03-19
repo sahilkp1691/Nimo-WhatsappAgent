@@ -1,0 +1,8 @@
+<div class="chat-history">
+    {% for chat in chat_history %}
+        <div class="message">
+            <strong>{{ chat.phone }}:</strong>
+            <p>{{ chat.message }}</p>
+        </div>
+    {% endfor %}
+</div>
